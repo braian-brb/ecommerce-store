@@ -9,8 +9,11 @@ import {
   Delete,
 } from '@nestjs/common';
 
+import { ProductService } from '../service/product.service';
+
 @Controller('products')
 export class ProductController {
+  constructor(private productsService: ProductService) {}
   @Get()
   getAll(
     // Infiere el tipado y valores por defecto
@@ -18,16 +21,12 @@ export class ProductController {
     @Query('offset') offset = 0,
     @Query('brand') brand: string,
   ) {
-    return {
-      message: `products: LIMIT => ${limit}, OFFSET => ${offset}, BRAND => ${brand}`,
-    };
+    return this.productsService.findAll();
   }
 
   @Get('/:id')
   get(@Param('id') id: string) {
-    return {
-      message: `product ${id}`,
-    };
+    return this.productsService.findOne(+id);
   }
 
   @Get('/filter')
@@ -37,24 +36,16 @@ export class ProductController {
 
   @Post()
   create(@Body() payload: any) {
-    return {
-      message: 'Accion de crear',
-      payload,
-    };
+    return this.productsService.create(payload);
   }
 
   @Put(':id')
   update(@Param('id') id: number, @Body() payload: any) {
-    return {
-      id,
-      payload,
-    };
+    return this.productsService.update(id, payload);
   }
 
   @Delete(':id')
   delete(@Param('id') id: number) {
-    return {
-      id,
-    };
+    return this.productsService.remove(Number(id));
   }
 }
