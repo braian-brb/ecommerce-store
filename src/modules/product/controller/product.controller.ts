@@ -7,6 +7,7 @@ import {
   Body,
   Put,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 
 import { ProductService } from '../service/product.service';
@@ -25,8 +26,8 @@ export class ProductController {
   }
 
   @Get('/:id')
-  get(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+  getOne(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.findOne(id);
   }
 
   @Get('/filter')
