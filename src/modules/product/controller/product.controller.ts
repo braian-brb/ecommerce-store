@@ -7,11 +7,11 @@ import {
   Body,
   Put,
   Delete,
-  ParseIntPipe,
+  // ParseIntPipe,
 } from '@nestjs/common';
 
 import { ProductService } from '../service/product.service';
-
+import { ParseIntPipe } from '../../../common/parse-int.pipe';
 @Controller('products')
 export class ProductController {
   constructor(private productsService: ProductService) {}
