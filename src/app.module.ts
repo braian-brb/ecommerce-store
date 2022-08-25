@@ -8,6 +8,8 @@ import { UserModule } from './users/users.module';
 import { firstValueFrom } from 'rxjs';
 import { DatabaseModule } from './database/database.module';
 
+import { enviroments } from './enviroments';
+
 @Module({
   imports: [
     ProductModule,
@@ -15,7 +17,7 @@ import { DatabaseModule } from './database/database.module';
     HttpModule,
     DatabaseModule,
     ConfigModule.forRoot({
-      envFilePath: '.env',
+      envFilePath: enviroments[process.env.NODE_ENV] || '.env',
       isGlobal: true,
     }),
   ],
