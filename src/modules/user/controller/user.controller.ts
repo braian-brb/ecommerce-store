@@ -6,42 +6,41 @@ import {
   Param,
   Post,
   Put,
+  ParseIntPipe,
 } from '@nestjs/common';
+
+import { UserService } from '../service/user.service';
+import { CreateUserDto, UpdateUserDto } from '../dto/user.dto';
 
 @Controller('user')
 export class UserController {
-  @Get('/:id')
-  get(@Param('id') id: string) {
-    return {
-      message: `product ${id}`,
-    };
+  constructor(private userService: UserService) {}
+
+  @Get()
+  getAll() {
+    return this.userService.findAll();
   }
 
-  @Get('/filter')
-  getProductFilter() {
-    return `yo soy un filter`;
+  @Get('/:id')
+  get(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.findOne(id);
   }
 
   @Post()
-  create(@Body() payload: any) {
-    return {
-      message: 'Accion de crear',
-      payload,
-    };
+  create(@Body() payload: CreateUserDto) {
+    return this.userService.create(payload);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() payload: any) {
-    return {
-      id,
-      payload,
-    };
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: UpdateUserDto,
+  ) {
+    return this.userService.update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return {
-      id,
-    };
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.remove(id);
   }
 }
