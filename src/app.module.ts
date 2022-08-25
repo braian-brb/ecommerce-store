@@ -1,6 +1,6 @@
-import { Inject, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { HttpModule, HttpService } from '@nestjs/axios';
-
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './products/products.module';
@@ -9,7 +9,16 @@ import { firstValueFrom } from 'rxjs';
 import { DatabaseModule } from './database/database.module';
 
 @Module({
-  imports: [ProductModule, UserModule, HttpModule, DatabaseModule],
+  imports: [
+    ProductModule,
+    UserModule,
+    HttpModule,
+    DatabaseModule,
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
+    }),
+  ],
   controllers: [AppController],
   providers: [
     AppService,
