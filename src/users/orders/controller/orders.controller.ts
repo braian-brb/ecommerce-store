@@ -24,30 +24,25 @@ export class OrderController {
 
   //
   @Get(':id')
-  getOrders(@Param('id', ParseIntPipe) id: number) {
+  getOrders(@Param('id') id) {
     return this.orderService.getOrderByUser(id);
   }
 
-  // @Get('/:id')
-  // getOne(@Param('id', ParseIntPipe) id: number) {
-  //   return this.orderService.findOne(id);
+  // @Post()
+  // create(@Body() payload: CreateOrderDto) {
+  //   return this.orderService.create(payload);
   // }
 
-  @Post()
-  create(@Body() payload: CreateOrderDto) {
-    return this.orderService.create(payload);
-  }
+  // @Put(':id')
+  // update(
+  //   @Param('id', ParseIntPipe) id: number,
+  //   @Body() payload: UpdateOrderDto,
+  // ) {
+  //   return this.orderService.update(id, payload);
+  // }
 
-  @Put(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() payload: UpdateOrderDto,
-  ) {
-    return this.orderService.update(id, payload);
-  }
-
-  @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
-    return this.orderService.remove(id);
-  }
+  // @Delete(':id')
+  // delete(@Param('id', ParseIntPipe) id: number) {
+  //   return this.orderService.remove(id);
+  // }
 }

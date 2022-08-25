@@ -13,35 +13,35 @@ export class OrderService {
 
   private counterId = 1;
   private orders: Order[] = [
-    {
-      id: this.counterId,
-      date: new Date(),
-      user: {
-        email: 'algo@admin.com',
-        password: 'password',
-        id: this.counterId,
-        role: 'admin',
-      },
-      products: [
-        {
-          id: 1,
-          name: 'Adidas T-Shirt',
-          description: 'Adidas T-Shirt ',
-          price: 323,
-          image: 'adidas.com',
-          stock: 323,
-        },
-      ],
-    },
+    // {
+    //   id: this.counterId,
+    //   date: new Date(),
+    //   user: {
+    //     email: 'algo@admin.com',
+    //     password: 'password',
+    //     id: this.counterId,
+    //     role: 'admin',
+    //   },
+    //   products: [
+    //     {
+    //       id: 1,
+    //       name: 'Adidas T-Shirt',
+    //       description: 'Adidas T-Shirt ',
+    //       price: 323,
+    //       image: 'adidas.com',
+    //       stock: 323,
+    //     },
+    //   ],
+    // },
   ];
 
-  getOrderByUser(id: number): Order {
+  async getOrderByUser(id: number) {
     const user = this.usersService.findOne(id);
     return {
       id: this.counterId,
       date: new Date(),
       user,
-      products: this.productsService.findAll(),
+      products: await this.productsService.findAll(),
     };
   }
 

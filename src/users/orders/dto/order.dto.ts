@@ -5,9 +5,6 @@ import { Product } from 'src/products/products/entity/product.entity';
 
 export class CreateOrderDto {
   @IsNotEmpty()
-  readonly id: number;
-
-  @IsNotEmpty()
   readonly date: Date;
 
   @IsNotEmpty()
