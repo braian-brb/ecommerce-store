@@ -1,5 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
 import { User } from 'src/users/users/entity/users.entity';
 import { Product } from 'src/products/products/entity/product.entity';
 
