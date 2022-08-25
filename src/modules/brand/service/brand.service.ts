@@ -35,11 +35,11 @@ export class BrandService {
   }
 
   update(id: number, payload: UpdateBrandDto) {
-    const brand = this.findOne(Number(id));
+    const brand = this.findOne(id);
     if (!brand) {
       return null;
     }
-    const index = this.brands.findIndex((item) => item.id === Number(id));
+    const index = this.brands.findIndex((item) => item.id === id);
     this.brands[index] = {
       ...brand,
       ...payload,

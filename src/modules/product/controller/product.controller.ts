@@ -31,11 +31,6 @@ export class ProductController {
     return this.productsService.findOne(id);
   }
 
-  @Get('/filter')
-  getProductFilter() {
-    return `yo soy un filter`;
-  }
-
   @Post()
   create(@Body() payload: CreateProductDto) {
     return this.productsService.create(payload);
