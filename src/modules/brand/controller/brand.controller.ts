@@ -14,6 +14,7 @@ import { CreateBrandDto, UpdateBrandDto } from '../dto/brand.dto';
 @Controller('brands')
 export class BrandController {
   constructor(private brandsService: BrandService) {}
+
   @Get()
   getAll() {
     return this.brandsService.findAll();
