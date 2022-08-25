@@ -11,11 +11,6 @@ const API_KEY_PROD = 'PROD123541323SA';
 @Global()
 @Module({
   imports: [
-    // MongooseModule.forRoot('mongodb://localhost:27017', {
-    //   user: 'root',
-    //   pass: 'root',
-    //   dbName: 'ecommerce-store',
-    // }),
     MongooseModule.forRootAsync({
       useFactory: async (configService: ConfigType<typeof config>) => {
         const { connection, user, password, host, port, dbName } =
