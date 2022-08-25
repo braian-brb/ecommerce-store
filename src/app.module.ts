@@ -19,6 +19,9 @@ import { CustomerService } from './modules/customer/service/customer.service';
 import { BrandModule } from './modules/brand/module/brand.module';
 import { BrandController } from './modules/brand/controller/brand.controller';
 import { BrandService } from './modules/brand/service/brand.service';
+import { CartsModule } from './modules/carts/module/carts.module';
+import { CartsController } from './modules/carts/controller/carts.controller';
+import { CartsService } from './modules/carts/service/carts.service';
 
 @Module({
   imports: [
@@ -28,6 +31,7 @@ import { BrandService } from './modules/brand/service/brand.service';
     UserModule,
     CustomerModule,
     BrandModule,
+    CartsModule,
   ],
   controllers: [
     AppController,
@@ -37,6 +41,7 @@ import { BrandService } from './modules/brand/service/brand.service';
     UserController,
     CustomerController,
     BrandController,
+    CartsController,
   ],
   providers: [
     AppService,
@@ -46,6 +51,7 @@ import { BrandService } from './modules/brand/service/brand.service';
     UserService,
     CustomerService,
     BrandService,
+    CartsService,
   ],
 })
 export class AppModule {}

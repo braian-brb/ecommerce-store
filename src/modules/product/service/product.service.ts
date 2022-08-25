@@ -8,10 +8,10 @@ export class ProductService {
   private products: Product[] = [
     {
       id: 1,
-      name: 'Product 1',
-      description: 'bla bla',
+      name: 'Nike Shoes',
+      description: 'Air Nike Shoes ',
       price: 121,
-      image: 'image',
+      image: 'nike.com',
       stock: 12,
     },
   ];
