@@ -9,14 +9,18 @@ import {
   Delete,
   // ParseIntPipe,
 } from '@nestjs/common';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
 import { ProductService } from '../service/products.service';
 import { ParseIntPipe } from '../../../common/parse-int.pipe';
 import { CreateProductDto, UpdateProductDto } from '../dto/products.dto';
+
+@ApiTags('Products')
 @Controller('products')
 export class ProductController {
   constructor(private productsService: ProductService) {}
   @Get()
+  @ApiOperation({ summary: 'List of products' })
   getAll(
     // Infiere el tipado y valores por defecto
     @Query('limit') limit = 100,
