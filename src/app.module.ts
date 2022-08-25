@@ -1,24 +1,24 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductModule } from './modules/product/module/product.module';
-import { ProductController } from './modules/product/controller/product.controller';
-import { ProductService } from './modules/product/service/product.service';
+import { ProductModule } from './modules/products/module/products.module';
+import { ProductController } from './modules/products/controller/products.controller';
+import { ProductService } from './modules/products/service/products.service';
 import { CategoriesModule } from './modules/categories/module/categories.module';
 import { CategoriesController } from './modules/categories/controller/categories.controller';
 import { CategoriesService } from './modules/categories/service/categories.service';
-import { OrderModule } from './modules/order/module/order.module';
-import { OrderController } from './modules/order/controller/order.controller';
-import { OrderService } from './modules/order/service/order.service';
-import { UserModule } from './modules/user/module/user.module';
-import { UserController } from './modules/user/controller/user.controller';
-import { UserService } from './modules/user/service/user.service';
-import { CustomerModule } from './modules/customer/module/customer.module';
-import { CustomerController } from './modules/customer/controller/customer.controller';
-import { CustomerService } from './modules/customer/service/customer.service';
-import { BrandModule } from './modules/brand/module/brand.module';
-import { BrandController } from './modules/brand/controller/brand.controller';
-import { BrandService } from './modules/brand/service/brand.service';
+import { OrderModule } from './modules/orders/module/orders.module';
+import { OrderController } from './modules/orders/controller/orders.controller';
+import { OrderService } from './modules/orders/service/orders.service';
+import { UserModule } from './modules/users/module/users.module';
+import { UserController } from './modules/users/controller/users.controller';
+import { UserService } from './modules/users/service/users.service';
+import { CustomerModule } from './modules/customers/module/customers.module';
+import { CustomerController } from './modules/customers/controller/customers.controller';
+import { CustomerService } from './modules/customers/service/customers.service';
+import { BrandsModule } from './modules/brands/module/brands.module';
+import { BrandsController } from './modules/brands/controller/brands.controller';
+import { BrandsService } from './modules/brands/service/brands.service';
 import { CartsModule } from './modules/carts/module/carts.module';
 import { CartsController } from './modules/carts/controller/carts.controller';
 import { CartsService } from './modules/carts/service/carts.service';
@@ -30,7 +30,7 @@ import { CartsService } from './modules/carts/service/carts.service';
     OrderModule,
     UserModule,
     CustomerModule,
-    BrandModule,
+    BrandsModule,
     CartsModule,
   ],
   controllers: [
@@ -40,7 +40,7 @@ import { CartsService } from './modules/carts/service/carts.service';
     OrderController,
     UserController,
     CustomerController,
-    BrandController,
+    BrandsController,
     CartsController,
   ],
   providers: [
@@ -50,7 +50,7 @@ import { CartsService } from './modules/carts/service/carts.service';
     OrderService,
     UserService,
     CustomerService,
-    BrandService,
+    BrandsService,
     CartsService,
   ],
 })
