@@ -21,7 +21,7 @@ export class CustomerController {
   }
 
   @Get('/:id')
-  get(@Param('id', ParseIntPipe) id: number) {
+  getOne(@Param('id', ParseIntPipe) id: number) {
     return this.customersService.findOne(id);
   }
 

@@ -6,42 +6,47 @@ import {
   Param,
   Post,
   Put,
+  ParseIntPipe,
 } from '@nestjs/common';
 
-@Controller('orders')
+import { OrderService } from '../service/orders.service';
+import { CreateOrderDto, UpdateOrderDto } from '../dto/order.dto';
+
+@Controller('orders/users')
 export class OrderController {
-  @Get('/:id')
-  get(@Param('id') id: string) {
-    return {
-      message: `product ${id}`,
-    };
+  constructor(private orderService: OrderService) {}
+
+  @Get()
+  getAll() {
+    return this.orderService.findAll();
   }
 
-  @Get('/filter')
-  getProductFilter() {
-    return `yo soy un filter`;
+  //
+  @Get(':id')
+  getOrders(@Param('id', ParseIntPipe) id: number) {
+    return this.orderService.getOrderByUser(id);
   }
+
+  // @Get('/:id')
+  // getOne(@Param('id', ParseIntPipe) id: number) {
+  //   return this.orderService.findOne(id);
+  // }
 
   @Post()
-  create(@Body() payload: any) {
-    return {
-      message: 'Accion de crear',
-      payload,
-    };
+  create(@Body() payload: CreateOrderDto) {
+    return this.orderService.create(payload);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() payload: any) {
-    return {
-      id,
-      payload,
-    };
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: UpdateOrderDto,
+  ) {
+    return this.orderService.update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return {
-      id,
-    };
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.orderService.remove(id);
   }
 }
