@@ -9,6 +9,7 @@ import { firstValueFrom } from 'rxjs';
 import { DatabaseModule } from './database/database.module';
 
 import { enviroments } from './enviroments';
+import config from './config';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { enviroments } from './enviroments';
     ConfigModule.forRoot({
       envFilePath: enviroments[process.env.NODE_ENV] || '.env',
       isGlobal: true,
+      load: [config],
     }),
   ],
   controllers: [AppController],
