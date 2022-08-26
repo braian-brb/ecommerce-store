@@ -50,6 +50,20 @@ export class OrderService {
     return this.orderModel.findByIdAndDelete(id);
   }
 
+  async removeProduct(id: string, productId: string) {
+    const order = await this.orderModel.findById(id);
+    order.products.pull(productId);
+    return order.save();
+  }
+
+  async addProducts(id: string, productsIds: string[]) {
+    const order = await this.orderModel.findByIdAndUpdate(id, {
+      $addToSet: { products: productsIds },
+    });
+    // productsIds.forEach((productId) => order.products.push(productId));
+    return order.save();
+  }
+
   // async getOrderByUser(id: number) {
   //   const user = this.usersService.findOne(id);
   //   return {

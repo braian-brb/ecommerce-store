@@ -19,3 +19,9 @@ export class CreateOrderDto {
 export class UpdateOrderDto extends PartialType(
   OmitType(CreateOrderDto, ['products']),
 ) {}
+
+export class AddProductsToOrderDto {
+  @IsNotEmpty()
+  @IsArray()
+  readonly productsIds: string[];
+}
