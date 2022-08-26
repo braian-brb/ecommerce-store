@@ -3,7 +3,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { AuthService } from '../services/auth.service';
 import { User } from '../../users/users/entity/users.entity';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}

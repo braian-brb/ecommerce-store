@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+
 import { Brand } from '../entity/brand.entity';
 import { CreateBrandDto, UpdateBrandDto } from '../dto/brand.dto';
 @Injectable()

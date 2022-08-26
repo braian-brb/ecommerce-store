@@ -8,7 +8,6 @@ import {
   Put,
   Delete,
   UseGuards,
-  // ParseIntPipe,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
@@ -18,7 +17,6 @@ import { Public } from '../../../auth/decorators/public.decorator';
 import { Roles } from '../../../auth/decorators/roles.decorator';
 import { Role } from '../../../auth/models/roles.model';
 import { ProductService } from '../service/products.service';
-
 import { MongoIdPipe } from '../../../common/mongo-id.pipe';
 import {
   CreateProductDto,
