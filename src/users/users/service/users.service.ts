@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
 import { User } from '../entity/users.entity';
 import { CreateUserDto, UpdateUserDto } from '../dto/user.dto';
@@ -27,35 +28,30 @@ export class UserService {
     return user;
   }
 
-  // create(payload: CreateUserDto) {
-  //   this.counterId++;
-  //   const newUser = {
-  //     id: this.counterId,
-  //     ...payload,
-  //   };
-  //   this.users.push(newUser);
-  //   return newUser;
-  // }
+  async create(data: CreateUserDto) {
+    const newUser = new this.userModel(data);
+    const hashPassword = await bcrypt.hash(newUser.password, 10);
+    newUser.password = hashPassword;
+    const model = await newUser.save();
+    const { password, ...rta } = model.toJSON();
+    return rta;
+  }
 
-  // update(id: number, payload: UpdateUserDto) {
-  //   const user = this.findOne(id);
-  //   if (!user) {
-  //     return null;
-  //   }
-  //   const index = this.users.findIndex((item) => item.id === id);
-  //   this.users[index] = {
-  //     ...user,
-  //     ...payload,
-  //   };
-  //   return this.users[index];
-  // }
+  findByEmail(email: string) {
+    return this.userModel.findOne({ email }).exec();
+  }
 
-  // remove(id: number) {
-  //   const index = this.users.findIndex((item) => item.id === id);
-  //   if (index === -1) {
-  //     throw new NotFoundException(`User #${id} not found`);
-  //   }
-  //   this.users.splice(index, 1);
-  //   return true;
-  // }
+  update(id: string, changes: UpdateUserDto) {
+    const user = this.userModel
+      .findByIdAndUpdate(id, { $set: changes }, { new: true })
+      .exec();
+    if (!user) {
+      throw new NotFoundException(`User #${id} not found`);
+    }
+    return user;
+  }
+
+  remove(id: string) {
+    return this.userModel.findByIdAndDelete(id);
+  }
 }

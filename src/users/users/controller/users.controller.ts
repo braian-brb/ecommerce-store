@@ -23,25 +23,22 @@ export class UserController {
   }
 
   @Get('/:id')
-  get(@Param('id', ParseIntPipe) id: number) {
+  get(@Param('id') id: number) {
     return this.userService.findOne(id);
   }
 
-  // @Post()
-  // create(@Body() payload: CreateUserDto) {
-  //   return this.userService.create(payload);
-  // }
+  @Post()
+  create(@Body() payload: CreateUserDto) {
+    return this.userService.create(payload);
+  }
 
-  // @Put(':id')
-  // update(
-  //   @Param('id', ParseIntPipe) id: number,
-  //   @Body() payload: UpdateUserDto,
-  // ) {
-  //   return this.userService.update(id, payload);
-  // }
+  @Put(':id')
+  update(@Param('id') id: string, @Body() payload: UpdateUserDto) {
+    return this.userService.update(id, payload);
+  }
 
-  // @Delete(':id')
-  // delete(@Param('id', ParseIntPipe) id: number) {
-  //   return this.userService.remove(id);
-  // }
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.userService.remove(id);
+  }
 }
