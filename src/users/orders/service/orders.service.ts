@@ -64,6 +64,14 @@ export class OrderService {
     return order.save();
   }
 
+  ordersByCustomer(customerId: number) {
+    return this.orderModel.find({
+      where: {
+        customer: customerId,
+      },
+    });
+  }
+
   // async getOrderByUser(id: number) {
   //   const user = this.usersService.findOne(id);
   //   return {
