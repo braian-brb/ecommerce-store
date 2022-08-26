@@ -6,9 +6,6 @@ export class CreateBrandDto {
   @IsNotEmpty()
   readonly name: string;
 
-  @IsNumber()
-  private id: number;
-
   @IsUrl()
   @IsNotEmpty()
   readonly image: string;

@@ -16,7 +16,7 @@ export class ProductService {
 
   async findAll(params?: FilterProductsDto) {
     if (!params) {
-      return this.productModel.find().exec();
+      return this.productModel.find().populate('brand').exec();
     }
     const filters: FilterQuery<Product> = {};
     const { limit, offset, minPrice, maxPrice } = params;
@@ -25,13 +25,17 @@ export class ProductService {
     }
     return await this.productModel
       .find(filters)
+      .populate('brand')
       .skip(offset)
       .limit(limit)
       .exec();
   }
 
   async findOne(id: string) {
-    const product = await this.productModel.findById(id).exec();
+    const product = await (
+      await this.productModel.findOne({ _id: id })
+    ).populate('brand');
+
     if (!product) {
       throw new NotFoundException(`Product #${id} not found`);
     }
