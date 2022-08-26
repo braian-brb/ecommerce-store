@@ -16,40 +16,28 @@ export class CustomerService {
   async findOne(id: number) {
     const customer = await this.customerModel.findById(id).exec();
     if (!customer) {
-      throw new NotFoundException(`Customer#${id} not found`);
+      throw new NotFoundException(`Customer #${id} not found`);
     }
     return customer;
   }
 
-  // create(payload: CreateCustomerDto) {
-  //   this.counterId++;
-  //   const newCustomer = {
-  //     id: this.counterId,
-  //     ...payload,
-  //   };
-  //   this.customers.push(newCustomer);
-  //   return newCustomer;
-  // }
+  create(data: CreateCustomerDto) {
+    console.log(data);
+    const newCustomer = new this.customerModel(data);
+    return newCustomer.save();
+  }
 
-  // update(id: number, payload: UpdateCustomerDto) {
-  //   const customer = this.findOne(id);
-  //   if (!customer) {
-  //     return null;
-  //   }
-  //   const index = this.customers.findIndex((item) => item.id === id);
-  //   this.customers[index] = {
-  //     ...customer,
-  //     ...payload,
-  //   };
-  //   return this.customers[index];
-  // }
+  update(id: string, changes: UpdateCustomerDto) {
+    const customer = this.customerModel
+      .findByIdAndUpdate(id, { $set: changes }, { new: true })
+      .exec();
+    if (!customer) {
+      throw new NotFoundException(`Customer #${id} not found`);
+    }
+    return customer;
+  }
 
-  // remove(id: number) {
-  //   const index = this.customers.findIndex((item) => item.id === id);
-  //   if (index === -1) {
-  //     throw new NotFoundException(`Customer #${id} not found`);
-  //   }
-  //   this.customers.splice(index, 1);
-  //   return true;
-  // }
+  remove(id: string) {
+    return this.customerModel.findByIdAndDelete(id);
+  }
 }

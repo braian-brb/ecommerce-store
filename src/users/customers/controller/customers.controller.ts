@@ -27,21 +27,18 @@ export class CustomerController {
     return this.customersService.findOne(id);
   }
 
-  // @Post()
-  // create(@Body() payload: CreateCustomerDto) {
-  //   return this.customersService.create(payload);
-  // }
+  @Post()
+  create(@Body() payload: CreateCustomerDto) {
+    return this.customersService.create(payload);
+  }
 
-  // @Put(':id')
-  // update(
-  //   @Param('id', ParseIntPipe) id: number,
-  //   @Body() payload: UpdateCustomerDto,
-  // ) {
-  //   return this.customersService.update(id, payload);
-  // }
+  @Put(':id')
+  update(@Param('id') id: string, @Body() payload: UpdateCustomerDto) {
+    return this.customersService.update(id, payload);
+  }
 
-  // @Delete(':id')
-  // delete(@Param('id', ParseIntPipe) id: number) {
-  //   return this.customersService.remove(id);
-  // }
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.customersService.remove(id);
+  }
 }
