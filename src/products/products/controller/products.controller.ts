@@ -7,9 +7,11 @@ import {
   Body,
   Put,
   Delete,
+  UseGuards,
   // ParseIntPipe,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 import { ProductService } from '../service/products.service';
 
@@ -20,10 +22,12 @@ import {
   FilterProductsDto,
 } from '../dto/products.dto';
 
+@UseGuards(AuthGuard('jwt'))
 @ApiTags('Products')
 @Controller('products')
 export class ProductController {
   constructor(private productsService: ProductService) {}
+
   @Get()
   @ApiOperation({ summary: 'List of products' })
   getAll(@Query() params: FilterProductsDto) {
