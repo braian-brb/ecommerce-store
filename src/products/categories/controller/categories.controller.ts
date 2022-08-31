@@ -31,21 +31,21 @@ export class CategoriesController {
     return this.categoriesService.findOne(id);
   }
 
-  // @Post()
-  // create(@Body() payload: CreateCategoryDto) {
-  //   return this.categoriesService.create(payload);
-  // }
+  @Post()
+  create(@Body() createCategoryDto: CreateCategoryDto) {
+    return this.categoriesService.create(createCategoryDto);
+  }
 
-  // @Put(':id')
-  // update(
-  //   @Param('id', ParseIntPipe) id: number,
-  //   @Body() payload: UpdateCategoryDto,
-  // ) {
-  //   return this.categoriesService.update(id, payload);
-  // }
+  @Put(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+  ) {
+    return this.categoriesService.update(id, updateCategoryDto);
+  }
 
-  // @Delete(':id')
-  // delete(@Param('id', ParseIntPipe) id: number) {
-  //   return this.categoriesService.remove(id);
-  // }
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.categoriesService.remove(id);
+  }
 }

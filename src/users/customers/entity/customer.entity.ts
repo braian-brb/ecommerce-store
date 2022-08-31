@@ -12,6 +12,10 @@ export class Customer extends Document {
   @Prop()
   phone: string;
 
+  @Prop()
+  address: string;
+
+  //ERA POR ACA
   @Prop({
     type: [{ name: { type: String }, color: { type: String } }],
   })

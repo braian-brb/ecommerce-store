@@ -55,6 +55,7 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {}
 
 export class FilterProductsDto {
   @IsOptional()
+  @ApiProperty()
   @IsPositive()
   limit: number;
 

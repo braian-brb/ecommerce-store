@@ -61,7 +61,6 @@ export class OrderService {
     const order = await this.orderModel.findByIdAndUpdate(id, {
       $addToSet: { products: productsIds },
     });
-    // productsIds.forEach((productId) => order.products.push(productId));
     return order.save();
   }
 

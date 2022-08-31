@@ -22,35 +22,26 @@ export class CategoriesService {
     return category;
   }
 
-  // create(payload: CreateCategoryDto) {
-  //   this.counterId++;
-  //   const newCategory = {
-  //     id: this.counterId,
-  //     ...payload,
-  //   };
-  //   this.categories.push(newCategory);
-  //   return newCategory;
-  // }
+  async create(createCategoryDto: CreateCategoryDto) {
+    const category = new this.categoriesModel(createCategoryDto);
+    return category.save();
+  }
 
-  // update(id: number, payload: UpdateCategoryDto) {
-  //   const category = this.findOne(id);
-  //   if (!category) {
-  //     return null;
-  //   }
-  //   const index = this.categories.findIndex((item) => item.id === id);
-  //   this.categories[index] = {
-  //     ...category,
-  //     ...payload,
-  //   };
-  //   return this.categories[index];
-  // }
+  async update(id: string, updateCategoryDto: UpdateCategoryDto) {
+    const category = await this.categoriesModel
+      .findByIdAndUpdate(id, updateCategoryDto, { new: true })
+      .exec();
+    if (!category) {
+      throw new NotFoundException(`Category ${id} not found`);
+    }
+    return category;
+  }
 
-  // remove(id: number) {
-  //   const index = this.categories.findIndex((item) => item.id === id);
-  //   if (index === -1) {
-  //     throw new NotFoundException(`Category #${id} not  found`);
-  //   }
-  //   this.categories.splice(index, 1);
-  //   return true;
-  // }
+  async remove(id: string) {
+    const result = await this.categoriesModel.findByIdAndRemove(id).exec();
+    if (!result) {
+      throw new NotFoundException(`Category ${id} not found`);
+    }
+    return result;
+  }
 }

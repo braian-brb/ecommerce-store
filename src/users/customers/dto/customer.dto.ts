@@ -13,6 +13,9 @@ export class CreateCustomerDto {
   @IsNotEmpty()
   readonly phone: string;
 
+  @IsNotEmpty()
+  readonly address: string;
+
   @IsArray()
   @IsNotEmpty()
   readonly skills: any;

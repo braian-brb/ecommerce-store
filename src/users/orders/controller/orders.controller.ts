@@ -26,14 +26,19 @@ export class OrderController {
     return this.orderService.findAll();
   }
 
+  @Get(':id')
+  getOne(@Param('id') id: string) {
+    return this.orderService.findOne(id);
+  }
+
   @Post()
-  create(@Body() payload: CreateOrderDto) {
-    return this.orderService.create(payload);
+  create(@Body() createOrderDto: CreateOrderDto) {
+    return this.orderService.create(createOrderDto);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() payload: UpdateOrderDto) {
-    return this.orderService.update(id, payload);
+  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
+    return this.orderService.update(id, updateOrderDto);
   }
 
   @Put(':id/products')
@@ -56,9 +61,4 @@ export class OrderController {
   ) {
     return this.orderService.removeProduct(id, productId);
   }
-
-  // @Get(':id')
-  // getOrders(@Param('id') id) {
-  //   return this.orderService.getOrderByUser(id);
-  // }
 }

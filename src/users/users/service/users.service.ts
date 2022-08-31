@@ -14,10 +14,8 @@ export class UserService {
   ) {}
 
   findAll() {
-    const apiKey = this.configService.get('API_KEY');
-    const dbName = this.configService.get('DATABASE_NAME');
-    console.log(apiKey, dbName);
-    return this.userModel.find().exec();
+    // project password field to 0
+    return this.userModel.find({}, { password: 0 }).exec();
   }
 
   async findOne(id: number) {
@@ -32,9 +30,10 @@ export class UserService {
     const newUser = new this.userModel(data);
     const hashPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashPassword;
-    const model = await newUser.save();
-    const { password, ...rta } = model.toJSON();
-    return rta;
+    const savedUser = await newUser.save({});
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...userWithoutPassword } = savedUser.toJSON();
+    return userWithoutPassword;
   }
 
   findByEmail(email: string) {
@@ -43,7 +42,11 @@ export class UserService {
 
   update(id: string, changes: UpdateUserDto) {
     const user = this.userModel
-      .findByIdAndUpdate(id, { $set: changes }, { new: true })
+      .findByIdAndUpdate(
+        id,
+        { $set: changes },
+        { new: true, projection: { password: 0 } },
+      )
       .exec();
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);
@@ -52,6 +55,8 @@ export class UserService {
   }
 
   remove(id: string) {
-    return this.userModel.findByIdAndDelete(id);
+    return this.userModel
+      .findByIdAndDelete(id, { projection: { password: 0 } })
+      .exec();
   }
 }

@@ -14,20 +14,4 @@ export class AppController {
   getHello() {
     return this.appService.getHello();
   }
-
-  @Get('tasks')
-  getTasks() {
-    return this.appService.getTasks();
-  }
-
-  @Public()
-  @Get('nuevo')
-  newEndPoint() {
-    return 'Yo soy nuevo';
-  }
-
-  @Get('/ruta/')
-  hello() {
-    return 'Con /sas/';
-  }
 }
