@@ -3,7 +3,7 @@ import { Document, Types } from 'mongoose';
 
 import { Brand } from '../../brands/entity/brand.entity';
 
-@Schema()
+@Schema({ versionKey: false, timestamps: true })
 export class Product extends Document {
   @Prop({ required: true })
   name: string;

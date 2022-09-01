@@ -23,7 +23,7 @@ export class CustomerController {
   }
 
   @Get('/:id')
-  getOne(@Param('id') id) {
+  getOne(@Param('id') id: string) {
     return this.customersService.findOne(id);
   }
 
