@@ -15,11 +15,27 @@ export class OrderService {
     @InjectModel(Order.name) private orderModel: Model<Order>,
   ) {}
 
-  findAll() {
-    return this.orderModel
-      .find()
-      .populate('customer')
-      .populate('products')
+  async findAll() {
+    // return await this.orderModel
+    //   .find()
+    //   .populate('user', { email: 1 })
+    //   .populate({
+    //     path: 'products',
+    //     populate: { path: 'product' },
+    //   })
+    //   .exec();
+    // return await this.orderModel with populate user projection (email 1) and populate nasted products path product with projection {name 1}
+    return await this.orderModel
+      .find({})
+      .populate({
+        path: 'user',
+        select: 'email',
+      })
+      .populate({
+        path: 'products',
+        // SELECT NAME, PRICE, DESCRIPTION
+        populate: { path: 'product', select: 'name price description' },
+      })
       .exec();
   }
 
@@ -32,8 +48,14 @@ export class OrderService {
     return product;
   }
 
-  create(data: CreateOrderDto) {
-    const newOrder = new this.orderModel(data);
+  async create(createOrderDto: CreateOrderDto) {
+    const cantOrders = await this.orderModel.countDocuments({}).exec();
+
+    const order = {
+      ...createOrderDto,
+      numberOrder: cantOrders + 1,
+    };
+    const newOrder = new this.orderModel(order);
     return newOrder.save();
   }
 

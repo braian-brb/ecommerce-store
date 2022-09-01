@@ -1,9 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-import { Customer } from '../../customers/entity/customer.entity';
-
-@Schema()
+@Schema({ versionKey: false })
 export class User extends Document {
   @Prop({ required: true })
   email: string;
@@ -14,8 +12,17 @@ export class User extends Document {
   @Prop({ default: 'user' })
   role: string;
 
-  @Prop({ type: Types.ObjectId, ref: Customer.name })
-  customer: Types.ObjectId | Customer;
+  @Prop()
+  name: string;
+
+  @Prop()
+  lastName: string;
+
+  @Prop()
+  phone: string;
+
+  @Prop()
+  address: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

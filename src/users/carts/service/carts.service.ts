@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { Cart } from '../entity/cart.entity';
-import { CreateCartDto, UpdateCartDto } from '../dto/cart.dto';
+import { CreateCartDto, UpdateCartDto, addProductDto } from '../dto/cart.dto';
 import { UserService } from '../../users/service/users.service';
 import { ProductService } from '../../../products/products/service/products.service';
 
@@ -15,23 +15,25 @@ export class CartsService {
     @InjectModel(Cart.name) private cartsModel: Model<Cart>,
   ) {}
 
-  findAll() {
-    return this.cartsModel
-      .find()
-      .populate('user', { password: 0 })
+  async findAll() {
+    return await this.cartsModel
+      .find({})
       .populate({
         path: 'products',
         populate: { path: 'product' },
       })
+      .populate('user', { address: 1, email: 1 })
       .exec();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.cartsModel
       .findOne({ _id: id })
-      .populate('user')
-      .projection({ password: 0 })
-      .populate('product')
+      .populate({
+        path: 'products',
+        populate: { path: 'product' },
+      })
+      .populate('user', { address: 1, email: 1 })
       .exec();
   }
 
@@ -47,6 +49,11 @@ export class CartsService {
   update(id: string, updateCartDto: UpdateCartDto) {
     const cart = this.cartsModel
       .findByIdAndUpdate(id, { $set: updateCartDto }, { new: true })
+      .populate({
+        path: 'products',
+        populate: { path: 'product' },
+      })
+      .populate('user', { address: 1, email: 1 })
       .exec();
     if (!cart) {
       throw new NotFoundException(`Cart #${id} not found`);
@@ -58,17 +65,38 @@ export class CartsService {
     return this.cartsModel.findByIdAndRemove(id).exec();
   }
 
-  async addProduct(cartId: string, productId: string) {
-    const cart = await this.cartsModel
-      .findByIdAndUpdate(cartId, {
-        $push: { products: productId },
-      })
-      .exec();
+  //add product to array of products in cart with product(string) and quantity(number) with pull and each (array objects)
+  async addProduct(id: string, productId: string, quantity = 1) {
+    const existProduct = await this.#checkIfProductExistsInCart(id, productId);
+    console.log(existProduct);
+    if (!existProduct) {
+      return this.cartsModel
+        .findByIdAndUpdate(
+          id,
+          {
+            $push: { products: { product: productId, quantity } },
+          },
+          { new: true },
+        )
+        .exec();
+    }
+    // ECONTRAR EL PRODUCTO QUE COINCIDA CON EL PRODUCTID Y AUMENTAR SU CANTIDAD POR LA QUE LLEGA EN PARAMETRO
+    return this.cartsModel.findOneAndUpdate(
+      { _id: id, 'products.product': productId },
+      { $inc: { 'products.$.quantity': quantity } },
+      { new: true },
+    );
+  }
 
+  async #checkIfProductExistsInCart(cartId: string, productId: string) {
+    const cart = await this.cartsModel.findById(cartId).exec();
     if (!cart) {
       throw new NotFoundException(`Cart #${cartId} not found`);
     }
-    return cart.save();
+    const productFound = cart.products.find(
+      (product) => product.product === productId,
+    );
+    return productFound ? true : false;
   }
 
   async removeProduct(cartId: string, productId: string) {

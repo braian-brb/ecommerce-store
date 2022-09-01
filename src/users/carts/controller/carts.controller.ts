@@ -22,14 +22,22 @@ export class CartsController {
   constructor(private readonly cartsService: CartsService) {}
 
   @Get()
-  findAll() {
-    return this.cartsService.findAll();
+  async findAll() {
+    return await this.cartsService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.cartsService.findOne(+id);
+    return this.cartsService.findOne(id);
   }
+
+  // @Get('/:id/products/:productId')
+  // getProductInCart(
+  //   @Param('id') id: string,
+  //   @Param('productId') productId: string,
+  // ) {
+  //   return this.cartsService.checkIfProductExistsInCart(id, productId);
+  // }
 
   @Post('/users')
   create(
@@ -39,18 +47,24 @@ export class CartsController {
     return this.cartsService.create(createCartDto);
   }
 
+  @Put(':id/products')
+  addProduct(
+    @Param('id') id: string,
+    @Body('product') productId: string,
+    @Body('quantity') quantity: number,
+  ) {
+    return this.cartsService.addProduct(id, productId, quantity);
+  }
+
   @Put(':id')
   update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
     return this.cartsService.update(id, updateCartDto);
   }
 
-  @Put(':id/products/:productId')
-  updateProduct(
-    @Param('id') id: string,
-    @Param('productId') productId: string,
-  ) {
-    return this.cartsService.addProduct(id, productId);
-  }
+  // @Put(':id/product/:productId')
+  // updateProduct(@Param('id') id: string, @Body('productId') productId: string) {
+  //   return this.cartsService.addProduct(id, productId);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

@@ -19,3 +19,9 @@ export class addProductToCartDto {
   @IsMongoId()
   productIds: string[] | string;
 }
+
+export class addProductDto {
+  @IsArray()
+  @IsNotEmpty()
+  products: any;
+}

@@ -2,15 +2,23 @@ import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 import { Product } from '../../../products/products/entity/product.entity';
-import { Customer } from '../../customers/entity/customer.entity';
+import { User } from '../../users/entity/users.entity';
 
 @Schema({ versionKey: false, timestamps: true })
 export class Order extends Document {
-  @Prop({ type: Types.ObjectId, ref: Customer.name, required: true })
-  customer: Customer | Types.ObjectId;
+  @Prop({ type: Types.ObjectId, ref: User.name, required: true })
+  user: User | Types.ObjectId;
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: Product.name }] })
-  products: Types.Array<Product>;
+  @Prop({
+    type: [
+      {
+        product: { type: Types.ObjectId, ref: Product.name },
+        quantity: { type: Number, default: 1 },
+      },
+    ],
+    _id: false,
+  })
+  products: Types.Array<Record<string, any>>;
 
   // estado ( por defecto en ‘generada’)
   @Prop({ default: 'generated' })

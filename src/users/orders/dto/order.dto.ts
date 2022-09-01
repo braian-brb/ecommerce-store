@@ -5,18 +5,13 @@ import { PartialType, OmitType, ApiProperty } from '@nestjs/swagger';
 
 export class CreateOrderDto {
   @IsNotEmpty()
-  @IsDate()
-  @ApiProperty()
-  readonly date: Date;
-
-  @IsNotEmpty()
   @ApiProperty()
   @IsMongoId()
-  readonly customer: string;
+  readonly user: string;
 
   @ApiProperty()
   @IsArray()
-  readonly products: string[];
+  readonly products: any;
 }
 
 export class UpdateOrderDto extends PartialType(

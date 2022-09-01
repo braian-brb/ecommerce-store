@@ -15,11 +15,11 @@ export class UserService {
 
   findAll() {
     // project password field to 0
-    return this.userModel.find({}, { password: 0 }).populate('customer').exec();
+    return this.userModel.find({}, { password: 0 }).exec();
   }
 
   async findOne(id: number) {
-    const user = await this.userModel.findById(id).populate('customer').exec();
+    const user = await this.userModel.findById(id).exec();
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);
     }
@@ -47,7 +47,6 @@ export class UserService {
         { $set: changes },
         { new: true, projection: { password: 0 } },
       )
-      .populate('customer')
       .exec();
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);

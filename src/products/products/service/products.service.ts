@@ -32,6 +32,10 @@ export class ProductService {
       .exec();
   }
 
+  async findByCategory(category: string) {
+    return await this.productModel.find({ category }).populate('brand').exec();
+  }
+
   async findOne(id: string) {
     const product = await (
       await this.productModel.findOne({ _id: id })
