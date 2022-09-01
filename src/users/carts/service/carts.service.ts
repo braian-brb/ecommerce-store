@@ -65,7 +65,6 @@ export class CartsService {
     return this.cartsModel.findByIdAndRemove(id).exec();
   }
 
-  //add product to array of products in cart with product(string) and quantity(number) with pull and each (array objects)
   async addProduct(id: string, productId: string, quantity = 1) {
     const existProduct = await this.#checkIfProductExistsInCart(id, productId);
     console.log(existProduct);
@@ -80,7 +79,6 @@ export class CartsService {
         )
         .exec();
     }
-    // ECONTRAR EL PRODUCTO QUE COINCIDA CON EL PRODUCTID Y AUMENTAR SU CANTIDAD POR LA QUE LLEGA EN PARAMETRO
     return this.cartsModel.findOneAndUpdate(
       { _id: id, 'products.product': productId },
       { $inc: { 'products.$.quantity': quantity } },
