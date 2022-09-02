@@ -8,11 +8,12 @@ export class Cart extends Document {
   @Prop({ type: Types.ObjectId, ref: User.name, required: true, unique: true })
   user: Types.ObjectId | User;
 
+  //TODO: Ver por que no funciona el min 0 en quantity
   @Prop({
     type: [
       {
         product: { type: String || Types.ObjectId, ref: Product.name },
-        quantity: { type: Number, default: 1 },
+        quantity: { type: Number, default: 1, min: 1, positive: true },
       },
     ],
     _id: false,

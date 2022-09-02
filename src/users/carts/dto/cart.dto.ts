@@ -1,27 +1,58 @@
-import { IsArray, IsDate, IsMongoId, IsNotEmpty } from 'class-validator';
+import {
+  IsArray,
+  IsDate,
+  IsMongoId,
+  IsNotEmpty,
+  IsOptional,
+  IsPositive,
+  Min,
+  ValidateNested,
+} from 'class-validator';
 import { PartialType, OmitType } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+
+export class Products {
+  @IsMongoId()
+  @IsNotEmpty()
+  productId: string;
+
+  @IsPositive()
+  @Min(1)
+  @IsOptional()
+  quantity: number;
+}
 
 export class CreateCartDto {
   @IsNotEmpty()
   @IsMongoId()
   user: string;
 
-  // array of productIds Type IsMongoId
-  @IsArray()
-  @IsNotEmpty()
-  products: any;
+  @ValidateNested()
+  @Type(() => Products)
+  readonly products: Products[];
 }
 
 export class UpdateCartDto extends PartialType(CreateCartDto) {}
 
-export class addProductToCartDto {
-  @IsNotEmpty()
+export class UpdateProductInCartDto {
   @IsMongoId()
-  productIds: string[] | string;
+  @IsNotEmpty()
+  cartId: string;
+
+  @IsMongoId()
+  @IsNotEmpty()
+  productId: string;
+
+  @IsOptional()
+  quantity: number;
 }
 
-export class addProductDto {
-  @IsArray()
+export class AddProductDto {
+  @IsMongoId()
   @IsNotEmpty()
-  products: any;
+  cartId: string;
+
+  @IsMongoId()
+  @IsNotEmpty()
+  productsId: string[] | string;
 }

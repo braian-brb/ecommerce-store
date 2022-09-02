@@ -14,7 +14,8 @@ import { CartsService } from '../service/carts.service';
 import {
   CreateCartDto,
   UpdateCartDto,
-  addProductToCartDto,
+  AddProductDto,
+  UpdateProductInCartDto,
 } from '../dto/cart.dto';
 
 @Controller('carts')
@@ -47,23 +48,35 @@ export class CartsController {
     return this.cartsService.create(createCartDto);
   }
 
+  @Put(':id/product/:productId')
+  updateProduct(
+    @Param('id') id: string,
+    @Param('productId') productId: string,
+    @Body('quantity') quantity: number,
+  ) {
+    const updateProductInCartDto: UpdateProductInCartDto = {
+      cartId: id,
+      productId,
+      quantity,
+    };
+    return this.cartsService.updateProduct(updateProductInCartDto);
+  }
+
   @Put(':id/products')
   addProduct(
     @Param('id') id: string,
-    @Body('product') productId: string,
-    @Body('quantity') quantity: number,
+    @Body('products') productsId: string | string[],
   ) {
-    return this.cartsService.addProduct(id, productId, quantity);
+    const addProductDto: AddProductDto = {
+      cartId: id,
+      productsId,
+    };
+    return this.cartsService.addProduct(addProductDto);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
-    return this.cartsService.update(id, updateCartDto);
-  }
-
-  // @Put(':id/product/:productId')
-  // updateProduct(@Param('id') id: string, @Body('productId') productId: string) {
-  //   return this.cartsService.addProduct(id, productId);
+  // @Put(':id')
+  // update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
+  //   return this.cartsService.update(id, updateCartDto);
   // }
 
   @Delete(':id')
