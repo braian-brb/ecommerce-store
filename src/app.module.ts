@@ -1,13 +1,10 @@
 import { Module } from '@nestjs/common';
-import { HttpModule, HttpService } from '@nestjs/axios';
+import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ProductModule } from './modules/products/products.module';
 import { UserModule } from './modules/users/users.module';
-import { firstValueFrom } from 'rxjs';
 import { DatabaseModule } from './modules/database/database.module';
 import { enviroments } from './enviroments';
 import { AuthModule } from './modules/auth/auth.module';
@@ -36,19 +33,6 @@ import config from './config';
     ChatModule,
   ],
   controllers: [],
-  providers: [
-    AppService,
-
-    {
-      provide: 'TASKS',
-      useFactory: async (http: HttpService) => {
-        const url = 'https://jsonplaceholder.typicode.com/todos';
-        const tasks = await http.get(url);
-        const data = await await (await firstValueFrom(tasks)).data;
-        return data;
-      },
-      inject: [HttpService],
-    },
-  ],
+  providers: [],
 })
 export class AppModule {}

@@ -1,12 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 import { User } from './entity/user.entity';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
-import config from '../../../config';
 import { MailService } from 'src/modules/mail/mail.service';
 
 export interface UserWithoutPassword {
@@ -23,7 +21,6 @@ export interface UserWithoutPassword {
 export class UserService {
   constructor(
     private mailService: MailService,
-    private configService: ConfigService,
     @InjectModel(User.name) private userModel: Model<User>,
   ) {}
 
