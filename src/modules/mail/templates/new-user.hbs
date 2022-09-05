@@ -1,0 +1,76 @@
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8' />
+  <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 60vh;
+      background-color: #F5F5F5;
+    }
+
+    .container__content {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 1rem #00000030;
+      width: 90%;
+    }
+
+    .container__content h1 {
+      text-align:
+        center;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #2B2B2B;
+    }
+
+    .container__content p {
+      text-align: center;
+      font-size: 1rem;
+      font-weight:
+        400;
+      color: #2B2B2B;
+    }
+
+    .container__content p span {
+      font-weight: 600;
+    }
+
+    @media screen and (max-width: 768px) {
+      .container__content {
+        width: 80%;
+      }
+    }
+
+
+  </style>
+</head>
+
+<body>
+  <div class='container'>
+    <div class='container__content'>
+      <h1>Se ha registrado un nuevo usuario en la plataforma</h1>
+      <p>Nombre: <span>{{user.name}}</span></p>
+      <p>Apellido: <span>{{user.lastName}}</span></p>
+      <p>Correo: <span>{{user.email}}</span></p>
+      <p>Teléfono: <span>{{user.phone}}</span></p>
+      <p>Dirección: <span>{{user.address}}</span></p>
+      <p>Rol: <span>{{user.role}}</span></p>
+      <p>ID: <span>{{user._id}}</span></p>
+    </div>
+  </div>
+</body>
+
+</html>

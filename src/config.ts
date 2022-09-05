@@ -16,5 +16,13 @@ export default registerAs('config', () => {
     },
     apiKey: process.env.API_KEY,
     jwtSecret: process.env.JWT_SECRET,
+    nodemailer: {
+      HOST: process.env.NODEMAILER_HOST,
+      PORT: process.env.NODEMAILER_PORT || 25 || 587,
+      USER: process.env.NODEMAILER_USER,
+      PASS: process.env.NODEMAILER_PASS,
+      ADMIN_MAIL: process.env.NODEMAILER_MAIL,
+      MAIL_ADMIN_ECOMMERCE: process.env.NODEMAILER_MAIL_ADMIN_ECOMMERCE,
+    },
   };
 });

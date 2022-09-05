@@ -5,12 +5,13 @@ import * as Joi from 'joi';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductModule } from './products/products.module';
-import { UserModule } from './users/users.module';
+import { ProductModule } from './modules/products/products.module';
+import { UserModule } from './modules/users/users.module';
 import { firstValueFrom } from 'rxjs';
-import { DatabaseModule } from './database/database.module';
+import { DatabaseModule } from './modules/database/database.module';
 import { enviroments } from './enviroments';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { ChatModule } from './modules/chat/chat.module';
 import config from './config';
 
 @Module({
@@ -30,9 +31,11 @@ import config from './config';
         DATABASE_PORT: Joi.number().required(),
       }),
     }),
+
     AuthModule,
+    ChatModule,
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [
     AppService,
 
